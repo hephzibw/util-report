@@ -14,4 +14,8 @@ class TimecardsController < ApplicationController
     redirect_to timecards_url,  notice: "Uploading Records in Progress"
   end
 
+  def report
+
+  end
+
 end

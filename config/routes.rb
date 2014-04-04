@@ -1,8 +1,10 @@
 UtilReport::Application.routes.draw do
+  root 'timecards#report'
 
   resources :timecards do
     collection do
       get 'upload_form'
+      get 'report'
       post 'upload'
     end
 
