@@ -1,0 +1,57 @@
+<h1>Listing timecards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Week ending date</th>
+      <th>Name</th>
+      <th>Employee</th>
+      <th>Client</th>
+      <th>Project</th>
+      <th>Sub project</th>
+      <th>Date</th>
+      <th>Billable hours</th>
+      <th>Client non billable hours</th>
+      <th>Tw non billable hours</th>
+      <th>Country</th>
+      <th>State</th>
+      <th>Work responsibility</th>
+      <th>Percentage</th>
+      <th>Grade</th>
+      <th>Role</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @timecards.each do |timecard| %>
+      <tr>
+        <td><%= timecard.week_ending_date %></td>
+        <td><%= timecard.name %></td>
+        <td><%= timecard.employee_id %></td>
+        <td><%= timecard.client %></td>
+        <td><%= timecard.project %></td>
+        <td><%= timecard.sub_project %></td>
+        <td><%= timecard.date %></td>
+        <td><%= timecard.billable_hours %></td>
+        <td><%= timecard.client_non_billable_hours %></td>
+        <td><%= timecard.tw_non_billable_hours %></td>
+        <td><%= timecard.country %></td>
+        <td><%= timecard.state %></td>
+        <td><%= timecard.work_responsibility %></td>
+        <td><%= timecard.percentage %></td>
+        <td><%= timecard.grade %></td>
+        <td><%= timecard.role %></td>
+        <td><%= link_to 'Show', timecard %></td>
+        <td><%= link_to 'Edit', edit_timecard_path(timecard) %></td>
+        <td><%= link_to 'Destroy', timecard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Timecard', new_timecard_path %>
