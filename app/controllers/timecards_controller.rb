@@ -15,7 +15,6 @@ class TimecardsController < ApplicationController
   end
 
   def report
-
   end
 
 end

@@ -1,1 +1,71 @@
-<h1>Placeholder Report</h1>
+<% require 'highcharts-js-rails' %>
+<h1 style="text-align: center; margin-bottom: 10%">Utilization Report for India as
+  on <%= Timecard.latest_week_ending_date_display %></h1>
+
+<%= Highcharts.new do |chart|
+  chart.chart(renderTo: 'graph-1', plotBackgroundColor: nil, plotBorderWidth: nil, plotShadow: false)
+  chart.title("Total Utilization")
+  chart.tooltip(pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>')
+  chart.plotOptions(pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+                  enabled: true,
+                  color: '#000000',
+                  connectorColor: '#000000',
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+  })
+  chart.series(name: 'Utilization', type: 'pie', data: Timecard.hours_distribution)
+end
+%>
+
+<% a = Timecard.by_office_distribution %>
+<%= Highcharts.new do |chart|
+  chart.chart({renderTo: 'graph-2',
+               type: 'column',
+               margin: [50, 50, 100, 80]
+              })
+  chart.title('Utilization per Region')
+  chart.xAxis(
+          categories: a.collect {|h| h[:name]},
+          labels: {
+                  rotation: -45,
+                  align: 'right',
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif'
+                  }
+          }
+  )
+  chart.yAxis(
+          min: 0,
+          title: {
+                  text: 'Utilization (percentage)'
+          }
+  )
+  chart.legend(enabled: false)
+  chart.series(
+          name: 'Utilization',
+          data: a.collect {|h| h[:data]},
+          dataLabels: {
+                  enabled: true,
+                  rotation: -90,
+                  color: '#FFFFFF',
+                  align: 'right',
+                  x: 4,
+                  y: 10,
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif',
+                          textShadow: '0 0 3px black'
+                  }
+          }
+  )
+
+
+end
+%>
+
+<div id="graph-1" style="width: 45%; height: 400px; float: left"></div>
+<div id="graph-2" style="width: 45%; height: 400px; margin-left: 55%"></div>

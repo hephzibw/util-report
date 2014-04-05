@@ -5,7 +5,9 @@ gem 'rails', '4.0.3'
 
 gem 'mongoid', git: 'git://github.com/mongoid/mongoid.git'
 gem 'mongoid-sadstory', git: 'git://github.com/madsheep/mongoid-sadstory.git'
+gem 'moped', :git => 'git://github.com/mongoid/moped.git'
 gem 'bson_ext'
+gem 'highcharts-js-rails'
 
 
 # Use SCSS for stylesheets

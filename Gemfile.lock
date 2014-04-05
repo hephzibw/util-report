@@ -15,6 +15,15 @@ GIT
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
 
+GIT
+  remote: git://github.com/mongoid/moped.git
+  revision: a44b4e1e0ee2bc00ad5a3fef937cdf1b15af072e
+  specs:
+    moped (2.0.0.rc1)
+      bson (~> 2.2)
+      connection_pool (~> 2.0)
+      optionable (~> 0.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -57,6 +66,8 @@ GEM
     connection_pool (2.0.0)
     erubis (2.7.0)
     execjs (2.0.2)
+    highcharts-js-rails (1.0.0)
+      railties (>= 3.1, < 4.1)
     hike (1.2.3)
     i18n (0.6.9)
     jbuilder (1.5.3)
@@ -71,10 +82,6 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
-    moped (2.0.0.rc1)
-      bson (~> 2.2)
-      connection_pool (~> 2.0)
-      optionable (~> 0.2.0)
     multi_json (1.9.2)
     optionable (0.2.0)
     origin (2.1.1)
@@ -136,10 +143,12 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   coffee-rails (~> 4.0.0)
+  highcharts-js-rails
   jbuilder (~> 1.2)
   jquery-rails
   mongoid!
   mongoid-sadstory!
+  moped!
   rails (= 4.0.3)
   sass-rails (~> 4.0.0)
   sdoc
