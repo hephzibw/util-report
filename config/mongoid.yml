@@ -2,7 +2,7 @@ consistency: :strong
 production:
   sessions:
     default:
-      uri: <%= ENV['MONGOHQ_URL'] %>
+      uri: mongodb://heroku:jQu_UcntevZAm-MMRtP68S75B8SbExuQR-88rNcBEwSKirDRELmv6fB8aSDXKJAj8U477HiT4TF5nyt3QaAwwA@lennon.mongohq.com:10017/app23781544
       options:
         skip_version_check: true
         safe: true
