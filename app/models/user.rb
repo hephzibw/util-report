@@ -44,7 +44,7 @@ class User
       p "2"*100
       user.provider = auth.provider
       user.uid = auth.uid
-      user
+      user.save!
     else
       p "3"*100
       User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
@@ -53,6 +53,7 @@ class User
         user.uid = auth.uid
         user.username = auth.info.name
         user.email = auth.info.email
+        user.save!
       end
     end
   end
