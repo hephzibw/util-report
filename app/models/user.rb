@@ -47,7 +47,7 @@ class User
       user
     else
       p "3"*100
-      User.where(auth.slice(:provider, :uid)).first_or_create do |user|
+      User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
         p "4"*100
         user.provider = auth.provider
         user.uid = auth.uid
