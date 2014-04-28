@@ -41,14 +41,11 @@ class User
 
   def self.from_omniauth(auth)
     if user = User.find_by(email: auth.info.email)
-      p "2"*100
       user.provider = auth.provider
       user.uid = auth.uid
       user.save!
     else
-      p "3"*100
       User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
-        p "4"*100
         user.provider = auth.provider
         user.uid = auth.uid
         user.username = auth.info.name
