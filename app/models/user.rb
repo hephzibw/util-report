@@ -36,12 +36,12 @@ class User
   # field :locked_at,       type: Time
 
   def self.from_omniauth(auth)
-    if user = User.find_by_email(auth.info.email)
+    if user = User.find_by(email: auth.info.email)
       user.provider = auth.provider
       user.uid = auth.uid
       user
     else
-      where(auth.slice(:provider, :uid)).first_or_create do |user|
+      User.where(auth.slice(:provider, :uid)).first_or_create do |user|
         user.provider = auth.provider
         user.uid = auth.uid
         user.username = auth.info.name
