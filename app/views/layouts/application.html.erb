@@ -8,9 +8,7 @@
 </head>
 <body>
 <% if !current_user  %>
-    <%= link_to "Sign In", new_user_session_path  %>
-    <%= link_to "Register", new_user_registration_path  %>
-    <%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)  %>
+    <%= link_to "Sign In with your TW Account", user_omniauth_authorize_path(:google_oauth2)  %>
 <% else %>
 <%= current_user.email %>
 <%= '|' %>
