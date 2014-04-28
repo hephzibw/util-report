@@ -40,11 +40,14 @@ class User
   # field :locked_at,       type: Time
 
   def self.from_omniauth(auth)
+    p "2"*100
     if user = User.find_by(email: auth.info.email)
+      p "3"*100
       user.provider = auth.provider
       user.uid = auth.uid
       user.save!
     else
+      p "4"*100
       User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
         user.provider = auth.provider
         user.uid = auth.uid
