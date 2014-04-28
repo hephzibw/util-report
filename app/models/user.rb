@@ -45,7 +45,10 @@ class User
       p "3"*100
       user.provider = auth.provider
       user.uid = auth.uid
+      p "-"*100
+      p user
       user.save!
+      user
     else
       p "4"*100
       User.where(:provider => auth.provider, :uid => auth.uid).first_or_create do |user|
@@ -55,6 +58,7 @@ class User
         user.email = auth.info.email
         user.password = Devise.friendly_token[0,10]
         user.save!
+        user
       end
     end
   end
