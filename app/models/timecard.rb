@@ -34,7 +34,6 @@ class Timecard
       }
 
   def self.upload_file_contents contents
-    records = []
     CSV.parse(contents, {:headers => true}) do |row|
       timecard = {}
       row.to_hash.each do |k, v|
@@ -44,9 +43,12 @@ class Timecard
           timecard[key] = v
         end
       end
-      records << timecard if timecard != {}
+      if timecard != {}
+        Timecard.where(:employee_id => timecard[:employee_id], :date => timecard[:date], :project => timecard[:project]).first_or_initialize do |timecard_entry|
+         timecard_entry.update(timecard)
+        end
+      end
     end
-    Timecard.create records
   end
 
   def self.latest_week_ending_date_display
@@ -59,7 +61,7 @@ class Timecard
   end
 
   def self.hours_distribution
-    match = {"$match" => {"week_ending_date" => latest_week_ending_date, "country" => "IND"}   }
+    match = {"$match" => {"week_ending_date" => latest_week_ending_date, "country" => "IND"}}
     group = {"$group" => {
         "_id" => "$country",
         "billable_hours" => {"$sum" => "$billable_hours"},
