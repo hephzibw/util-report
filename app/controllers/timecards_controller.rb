@@ -12,7 +12,7 @@ class TimecardsController < ApplicationController
     else
       logger.error "Bad file_data: #{file_data.class.name}: #{file_data.inspect}"
     end
-    redirect_to timecards_url,  notice: "Uploading Records in Progress"
+    redirect_to authenticated_root_path,  notice: "Uploading Records in Progress"
   end
 
   def report
