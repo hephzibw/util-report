@@ -2,33 +2,15 @@
 <h1 style="text-align: center; margin-bottom: 10%">Utilization Report for India as
   on <%= Timecard.latest_week_ending_date_display %></h1>
 
+<% timecards_by_country = Timecard.by_country_distribution %>
 <%= Highcharts.new do |chart|
-  chart.chart(renderTo: 'graph-1', plotBackgroundColor: nil, plotBorderWidth: nil, plotShadow: false)
-  chart.title("Total Utilization")
-  chart.tooltip(pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>')
-  chart.plotOptions(pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          dataLabels: {
-                  enabled: true,
-                  color: '#000000',
-                  connectorColor: '#000000',
-                  format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-          }
-  })
-  chart.series(name: 'Utilization', type: 'pie', data: Timecard.hours_distribution)
-end
-%>
-
-<% a = Timecard.by_office_distribution %>
-<%= Highcharts.new do |chart|
-  chart.chart({renderTo: 'graph-2',
+  chart.chart({renderTo: 'graph-1',
                type: 'column',
                margin: [50, 50, 100, 80]
               })
-  chart.title('Utilization per Region')
+  chart.title('Utilization per Country')
   chart.xAxis(
-          categories: a.collect {|h| h[:name]},
+          categories: timecards_by_country.collect {|h| h[:name]},
           labels: {
                   rotation: -45,
                   align: 'right',
@@ -47,7 +29,7 @@ end
   chart.legend(enabled: false)
   chart.series(
           name: 'Utilization',
-          data: a.collect {|h| h[:data]},
+          data: timecards_by_country.collect {|h| h[:data]},
           dataLabels: {
                   enabled: true,
                   rotation: -90,
@@ -67,5 +49,218 @@ end
 end
 %>
 
-<div id="graph-1" style="width: 45%; height: 400px; float: left"></div>
-<div id="graph-2" style="width: 45%; height: 400px; margin-left: 55%"></div>
+<%= Highcharts.new do |chart|
+  chart.chart(renderTo: 'graph-2', plotBackgroundColor: nil, plotBorderWidth: nil, plotShadow: false)
+  chart.title("India: Total Utilization")
+  chart.tooltip(pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>')
+  chart.plotOptions(pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+                  enabled: true,
+                  color: '#000000',
+                  connectorColor: '#000000',
+                  format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+  })
+  chart.series(name: 'Utilization', type: 'pie', data: Timecard.hours_distribution)
+end
+%>
+
+
+
+<% timecards_by_office = Timecard.by_office_distribution %>
+<%= Highcharts.new do |chart|
+  chart.chart({renderTo: 'graph-3',
+               type: 'column',
+               margin: [50, 50, 100, 80]
+              })
+  chart.title('India Utilization per Office')
+  chart.xAxis(
+          categories: timecards_by_office.collect {|h| h[:name]},
+          labels: {
+                  rotation: -45,
+                  align: 'right',
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif'
+                  }
+          }
+  )
+  chart.yAxis(
+          min: 0,
+          title: {
+                  text: 'Utilization (percentage)'
+          }
+  )
+  chart.legend(enabled: false)
+  chart.series(
+          name: 'Utilization',
+          data: timecards_by_office.collect {|h| h[:data]},
+          dataLabels: {
+                  enabled: true,
+                  rotation: -90,
+                  color: '#FFFFFF',
+                  align: 'right',
+                  x: 4,
+                  y: 10,
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif',
+                          textShadow: '0 0 3px black'
+                  }
+          }
+  )
+
+
+end
+%>
+
+<% timecards_by_role = Timecard.by_role_distribution %>
+<%= Highcharts.new do |chart|
+  chart.chart({renderTo: 'graph-4',
+               type: 'column',
+               margin: [50, 50, 100, 80]
+              })
+  chart.title('India Utilization per Role')
+  chart.xAxis(
+          categories: timecards_by_role.collect {|h| h[:name]},
+          labels: {
+                  rotation: -45,
+                  align: 'right',
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif'
+                  }
+          }
+  )
+  chart.yAxis(
+          min: 0,
+          title: {
+                  text: 'Utilization (percentage)'
+          }
+  )
+  chart.legend(enabled: false)
+  chart.series(
+          name: 'Utilization',
+          data: timecards_by_role.collect {|h| h[:data]},
+          dataLabels: {
+                  enabled: true,
+                  rotation: -90,
+                  color: '#FFFFFF',
+                  align: 'right',
+                  x: 4,
+                  y: 10,
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif',
+                          textShadow: '0 0 3px black'
+                  }
+          }
+  )
+
+
+end
+%>
+
+<% timecards_by_grade = Timecard.by_grade_distribution %>
+<%= Highcharts.new do |chart|
+  chart.chart({renderTo: 'graph-5',
+               type: 'column',
+               margin: [50, 50, 100, 80]
+              })
+  chart.title('India Utilization per Grade')
+  chart.xAxis(
+          categories: timecards_by_grade.collect {|h| h[:name]},
+          labels: {
+                  rotation: -45,
+                  align: 'right',
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif'
+                  }
+          }
+  )
+  chart.yAxis(
+          min: 0,
+          title: {
+                  text: 'Utilization (percentage)'
+          }
+  )
+  chart.legend(enabled: false)
+  chart.series(
+          name: 'Utilization',
+          data: timecards_by_grade.collect {|h| h[:data]},
+          dataLabels: {
+                  enabled: true,
+                  rotation: -90,
+                  color: '#FFFFFF',
+                  align: 'right',
+                  x: 4,
+                  y: 10,
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif',
+                          textShadow: '0 0 3px black'
+                  }
+          }
+  )
+
+
+end
+%>
+
+<% timecards_by_project = Timecard.by_project_distribution %>
+<%= Highcharts.new do |chart|
+  chart.chart({renderTo: 'graph-6',
+               type: 'column',
+               margin: [50, 50, 100, 80]
+              })
+  chart.title('India Utilization per Project')
+  chart.xAxis(
+          categories: timecards_by_project.collect {|h| h[:name]},
+          labels: {
+                  rotation: -45,
+                  align: 'right',
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif'
+                  }
+          }
+  )
+  chart.yAxis(
+          min: 0,
+          title: {
+                  text: 'Utilization (percentage)'
+          }
+  )
+  chart.legend(enabled: false)
+  chart.series(
+          name: 'Utilization',
+          data: timecards_by_project.collect {|h| h[:data]},
+          dataLabels: {
+                  enabled: true,
+                  rotation: -90,
+                  color: '#FFFFFF',
+                  align: 'right',
+                  x: 4,
+                  y: 10,
+                  style: {
+                          fontSize: '13px',
+                          fontFamily: 'Verdana, sans-serif',
+                          textShadow: '0 0 3px black'
+                  }
+          }
+  )
+
+
+end
+%>
+
+
+<div id="graph-1" style="width: 45%; height: 400px; float: left; margin-bottom: 10%"></div>
+<div id="graph-2" style="width: 45%; height: 400px; margin-left: 55%; margin-bottom: 10%"></div>
+<div id="graph-3" style="width: 45%; height: 400px; float: left; margin-bottom: 10%"></div>
+<div id="graph-4" style="width: 45%; height: 400px; margin-left: 55%; margin-bottom: 10%"></div>
+<div id="graph-5" style="width: 55%; height: 400px; margin-left: 25%; margin-right: 25%;; margin-bottom: 10%"></div>
+<div id="graph-6" style="width: 90%; height: 400px; margin-left: 5%; margin-right: 5%;  margin-bottom: 10%"></div>

@@ -78,10 +78,47 @@ class Timecard
     ]
   end
 
-  def self.by_office_distribution
-    match = {"$match" => {"week_ending_date" => latest_week_ending_date, "country" => "IND", "working_office" => {"$ne" => nil}}}
+  def self.by_country_distribution
+    match = {"$match" => {"week_ending_date" => latest_week_ending_date, "country" => {"$ne" => nil}}}
     group = {"$group" => {
-        "_id" => "$working_office",
+        "_id" => "$country",
+        "billable_hours" => {"$sum" => "$billable_hours"},
+        "client_non_billable_hours" => {"$sum" => "$client_non_billable_hours"},
+        "tw_non_billable_hours" => {"$sum" => "$tw_non_billable_hours"}
+    }
+    }
+
+    results = Timecard.collection.aggregate([match, group])
+
+    results.collect do |row|
+      {
+          name: row["_id"],
+          data: utilization(row)
+      }
+    end
+  end
+
+  def self.by_office_distribution
+    calculate_utilization_by "working_office"
+  end
+
+
+  def self.by_role_distribution
+    calculate_utilization_by "role"
+  end
+
+  def self.by_grade_distribution
+    calculate_utilization_by "grade"
+  end
+
+  def self.by_project_distribution
+    calculate_utilization_by "project"
+  end
+
+  def self.calculate_utilization_by parameter
+    match = {"$match" => {"week_ending_date" => latest_week_ending_date, "country" => "IND", parameter => {"$ne" => nil}}}
+    group = {"$group" => {
+        "_id" => "$#{parameter}",
         "billable_hours" => {"$sum" => "$billable_hours"},
         "client_non_billable_hours" => {"$sum" => "$client_non_billable_hours"},
         "tw_non_billable_hours" => {"$sum" => "$tw_non_billable_hours"}
@@ -101,4 +138,6 @@ class Timecard
   def self.utilization(row)
     ((row["billable_hours"] * 100) / (row["billable_hours"] + row["tw_non_billable_hours"] + row["client_non_billable_hours"])).round(2)
   end
+
+
 end
