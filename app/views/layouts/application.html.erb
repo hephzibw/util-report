@@ -7,16 +7,22 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<% if !current_user  %>
-    <%= link_to "Sign In with your TW Account", user_omniauth_authorize_path(:google_oauth2)  %>
-<% else %>
-<%= current_user.email %>
-<%= '|' %>
-<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
-<% end %>
-<p class='notice'><%=  notice %></p>
-<p class='alert'><%=  alert %></p>
-<%= yield %>
+<div class="container-narrow">
+    <div class="masthead">
+        <ul class="nav nav-pills pull-right" style="margin-right: 5%">
+            <% if !current_user  %>
+            <%= link_to "Sign In with your TW Account", user_omniauth_authorize_path(:google_oauth2)  %>
+            <% else %>
+            <%= current_user.email %>
+            <%= '|' %>
+            <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+            <% end %>
+        </ul>
+        <h5 class="muted" style="margin-left: 5%">Utilization Reporting App</h5>
+    </div>
+    <hr />
+    <%= yield %>
+</div>
 
 </body>
 </html>

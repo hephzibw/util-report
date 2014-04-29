@@ -1,6 +1,6 @@
 <% require 'highcharts-js-rails' %>
-<h1 style="text-align: center; margin-bottom: 10%">Utilization Report for India as
-  on <%= Timecard.latest_week_ending_date_display %></h1>
+<h2 style="text-align: center; margin-bottom: 10%">Utilization Report for India as
+  on <%= Timecard.latest_week_ending_date_display %></h2>
 
 <% timecards_by_country = Timecard.by_country_distribution %>
 <%= Highcharts.new do |chart|

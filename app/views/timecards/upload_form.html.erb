@@ -1,8 +1,8 @@
-<h1>Upload Timecard</h1>
+<div class="border-form-div">
+<h2>Upload Timecard</h2>
 
 <%= form_tag({action: :upload}, multipart: true) do %>
     <%= file_field_tag 'Upload CSV' %>
-    <input name="commit" type="submit">
+    <input name="commit" type="submit" class="btn btn-primary">
 <% end %>
-
-<%= link_to 'Back', timecards_path %>
+</div>
