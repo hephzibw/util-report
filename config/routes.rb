@@ -12,9 +12,10 @@ UtilReport::Application.routes.draw do
   authenticated :user do
     root :to => 'timecards#report', :as => :authenticated_root
   end
+
   root :to => redirect('/users/sign_in')
 
-  devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
+  devise_for :users, controllers: {:registrations => "registrations",:sessions => "sessions", omniauth_callbacks: "omniauth_callbacks" }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
